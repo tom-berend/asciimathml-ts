@@ -63,7 +63,7 @@ export class AMNode {
         this.attributes = {};
         this.style = ''; //{ [key: string]: any } = { fontWeight: '', fontStyle: '' }
         this.nodeName = t;
-        this.nodeValue = content;
+        this.nodeValue = content.replace('<', '&lt;'); // escape contants with <
         this.unique = Symbol();
         // if (t === '') { this.nodeType = 11 }
         // if (t === '#text') { this.nodeType = 3 }
@@ -162,7 +162,7 @@ export class AMNode {
     /** turn a tree of AMNodes into an HTML string */
     flatten() {
         let html = '';
-        let style = (this.style.length > 0) ? ` style = \'${this.style}\'` : '';
+        let style = (this.style.length > 0) ? ` style = "${this.style}"` : '';
         if (this.nodeName !== '#text' && this.nodeName !== '') {
             let attributes = '';
             for (let [key, value] of Object.entries(this.attributes))
@@ -350,8 +350,8 @@ let AMsymbols = [
     { input: "}", tag: "mo", output: "}", tex: null, ttype: RIGHTBRACKET },
     { input: "|", tag: "mo", output: "|", tex: null, ttype: LEFTRIGHT },
     { input: ":|:", tag: "mo", output: "|", tex: null, ttype: CONST },
-    { input: "|:", tag: "mo", output: "|", tex: null, ttype: LEFTBRACKET },
-    { input: ":|", tag: "mo", output: "|", tex: null, ttype: RIGHTBRACKET },
+    { input: "|:", tag: "mo", output: "| ", tex: null, ttype: LEFTBRACKET },
+    { input: ":|", tag: "mo", output: " |", tex: null, ttype: RIGHTBRACKET },
     //{input:"||", tag:"mo", output:"||", tex:null, ttype:LEFTRIGHT},
     { input: "(:", tag: "mo", output: "\u2329", tex: "langle", ttype: LEFTBRACKET },
     { input: ":)", tag: "mo", output: "\u232A", tex: "rangle", ttype: RIGHTBRACKET },
@@ -426,7 +426,7 @@ let AMsymbols = [
     { input: "csch", tag: "mo", output: "csch", tex: null, ttype: UNARY, func: true },
     { input: "exp", tag: "mo", output: "exp", tex: null, ttype: UNARY, func: true },
     { input: "abs", tag: "mo", output: "abs", tex: null, ttype: UNARY, rewriteleftright: ["|", "|"] },
-    { input: "norm", tag: "mo", output: "norm", tex: null, ttype: UNARY, rewriteleftright: ["\u2225", "\u2225"] },
+    { input: "norm", tag: "mo", output: "norm", tex: null, ttype: UNARY, rewriteleftright: ["\u2016", "\u2016"] },
     { input: "floor", tag: "mo", output: "floor", tex: null, ttype: UNARY, rewriteleftright: ["\u230A", "\u230B"] },
     { input: "ceil", tag: "mo", output: "ceil", tex: null, ttype: UNARY, rewriteleftright: ["\u2308", "\u2309"] },
     { input: "log", tag: "mo", output: "log", tex: null, ttype: UNARY, func: true },
@@ -863,10 +863,10 @@ export class AMserver {
                             && result[0].firstChild.nodeValue.length == 1))) {
                         // special case of single character base for vector accent,
                         // where stretchy can make it look bad
-                        accnode.setAttribute("stretchy", false);
+                        accnode.setAttribute("stretchy", 'false');
                     }
                     else {
-                        accnode.setAttribute("stretchy", true);
+                        accnode.setAttribute("stretchy", 'true');
                     }
                     node.appendChild(accnode);
                     return [node, result[1]];
@@ -1134,7 +1134,8 @@ export class AMserver {
                     }
                     table.appendChild(row);
                 }
-                table.setAttribute("columnlines", columnlines.join(" "));
+                if (columnlines.length > 0)
+                    table.setAttribute("columnlines", columnlines.join(" "));
                 if (typeof symbol.invisible == "boolean" && symbol.invisible) {
                     table.setAttribute("columnalign", "left");
                 }
@@ -1259,7 +1260,14 @@ export class AMserver {
         }
         return { isMatrix: true, rows: rowsout };
     }
-    parseMath(str) {
+    parseMath(str, inline) {
+        // add a check for Chrome
+        try {
+            document.fonts.check('STIX Two Math');
+        }
+        catch {
+            console.log("%cChrome don't offer a Math font by default. Include this link in your header:", "color:red;background-color:white;", "<link href=\"https://fonts.googleapis.com/css2?family=STIX Two Math\" rel=\"stylesheet\">");
+        }
         this.AMnestingDepth = 0;
         //some basic cleanup for dealing with stuff editors like TinyMCE adds
         // str = str.replace(/&nbsp;/g, "");
@@ -1281,6 +1289,7 @@ export class AMserver {
         if (this.displaystyle)
             node.setAttribute("displaystyle", "true");
         node = this.createMmlNode("math", node);
+        node.setAttribute("display", inline ? "inline" : "block");
         node = this.createMmlNode('div', node);
         // node.style = this.cancelStyle;
         if (this.showasciiformulaonhover) { //fixed by djhsu so newline

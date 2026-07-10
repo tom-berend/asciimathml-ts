@@ -211,7 +211,7 @@ class AMNode
     {
         $html = '';
 
-        $style = (strlen($this->style) > 0) ? " style = '{$this->style}'" : "";
+        $style = (strlen($this->style) > 0) ? " style = \"{$this->style}\"" : "";
         if ($this->nodeName !== '#text' and $this->nodeName !== '') {
 
             $attributes = '';
@@ -472,8 +472,8 @@ $AMsymbols = [
     ['input' => "}", 'tag' => "mo", 'output' => "}", 'tex' => null, 'ttype' => $RIGHTBRACKET],
     ['input' => "|", 'tag' => "mo", 'output' => "|", 'tex' => null, 'ttype' => $LEFTRIGHT],
     ['input' => ":|:", 'tag' => "mo", 'output' => "|", 'tex' => null, 'ttype' => $CONST],
-    ['input' => "|:", 'tag' => "mo", 'output' => "| ", 'tex' => null, 'ttype' => $LEFTBRACKET],
-    ['input' => ":|", 'tag' => "mo", 'output' => " |", 'tex' => null, 'ttype' => $RIGHTBRACKET],
+    ['input' => "|:", 'tag' => "mo", 'output' => "|", 'tex' => null, 'ttype' => $LEFTBRACKET],
+    ['input' => ":|", 'tag' => "mo", 'output' => "|", 'tex' => null, 'ttype' => $RIGHTBRACKET],
     //{'input' =>"or", 'tag' =>"mo", 'output' =>"or", 'tex' =>null, 'ttype' =>$LEFTRIGHT},
     ['input' => "(:", 'tag' => "mo", 'output' => "\u{2329}", 'tex' => "langle", 'ttype' => $LEFTBRACKET],
     ['input' => ":)", 'tag' => "mo", 'output' => "\u{232A}", 'tex' => "rangle", 'ttype' => $RIGHTBRACKET],
@@ -551,7 +551,7 @@ $AMsymbols = [
     ['input' => "csch", 'tag' => "mo", 'output' => "csch", 'tex' => null, 'ttype' => $UNARY, 'func' => true],
     ['input' => "exp", 'tag' => "mo", 'output' => "exp", 'tex' => null, 'ttype' => $UNARY, 'func' => true],
     ['input' => "abs", 'tag' => "mo", 'output' => "abs", 'tex' => null, 'ttype' => $UNARY, 'rewriteleftright' => ["|", "|"]],
-    ['input' => "norm", 'tag' => "mo", 'output' => "norm", 'tex' => null, 'ttype' => $UNARY, 'rewriteleftright' => ["\u{2225}", "\u{2225}"]],
+    ['input' => "norm", 'tag' => "mo", 'output' => "norm", 'tex' => null, 'ttype' => $UNARY, 'rewriteleftright' => ["\u{2016}", "\u{2016}"]],
     ['input' => "floor", 'tag' => "mo", 'output' => "floor", 'tex' => null, 'ttype' => $UNARY, 'rewriteleftright' => ["\u{230A}", "\u{230B}"]],
     ['input' => "ceil", 'tag' => "mo", 'output' => "ceil", 'tex' => null, 'ttype' => $UNARY, 'rewriteleftright' => ["\u{2308}", "\u{2309}"]],
     ['input' => "log", 'tag' => "mo", 'output' => "log", 'tex' => null, 'ttype' => $UNARY, 'func' => true],

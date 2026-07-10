@@ -188,7 +188,7 @@ export class AMNode {
     flatten(): string {
         let html = ''
 
-        let style = (this.style.length > 0) ? ` style = \'${this.style}\'` : '';
+        let style = (this.style.length > 0) ? ` style = "${this.style}"` : '';
 
         if (this.nodeName !== '#text' && this.nodeName !== '') {
 
@@ -491,7 +491,7 @@ let AMsymbols: AMSymbol[] = [
     { input: "csch", tag: "mo", output: "csch", tex: null, ttype: UNARY, func: true },
     { input: "exp", tag: "mo", output: "exp", tex: null, ttype: UNARY, func: true },
     { input: "abs", tag: "mo", output: "abs", tex: null, ttype: UNARY, rewriteleftright: ["|", "|"] },
-    { input: "norm", tag: "mo", output: "norm", tex: null, ttype: UNARY, rewriteleftright: ["\u2225", "\u2225"] },
+    { input: "norm", tag: "mo", output: "norm", tex: null, ttype: UNARY, rewriteleftright: ["\u2016", "\u2016"] },
     { input: "floor", tag: "mo", output: "floor", tex: null, ttype: UNARY, rewriteleftright: ["\u230A", "\u230B"] },
     { input: "ceil", tag: "mo", output: "ceil", tex: null, ttype: UNARY, rewriteleftright: ["\u2308", "\u2309"] },
     { input: "log", tag: "mo", output: "log", tex: null, ttype: UNARY, func: true },
@@ -1354,6 +1354,15 @@ export class AMserver {
 
 
     parseMath(str: string, inline: true): string {
+        // add a check for Chrome
+        try{ 
+            document.fonts.check('STIX Two Math')
+        }catch{    
+            console.log("%cChrome don't offer a Math font by default. Include this link in your header:",
+            "color:red;background-color:white;",
+            "<link href=\"https://fonts.googleapis.com/css2?family=STIX Two Math\" rel=\"stylesheet\">")
+        }
+
         this.AMnestingDepth = 0;
         //some basic cleanup for dealing with stuff editors like TinyMCE adds
         // str = str.replace(/&nbsp;/g, "");

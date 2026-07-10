@@ -215,7 +215,7 @@ function appnd(string $str, string $comment = '')
 function testSuite()
 {
 
-    appnd ('phi,varphi');
+    appnd('phi,varphi');
     appnd('[|:a,b:|]');
     appnd('lt mlt gt mgt in !in sub !sub');
     appnd('{[(1,2),(3,4)],[(1,2),(3,4)]}', 'should NOT be a column vector');
@@ -263,21 +263,21 @@ function testSuite()
     appnd('lim_(N->oo) sum_(i=0)^N', 'Complex subscripts');
 
 
-    appnd('int_0^1 f(x)dx','Subscripts must come before superscripts');
-    appnd('int_0^1 f(x)dx','Subscripts must come before superscripts');
-    
-
-    appnd('(dq)/(dp)','For variables other than x,y,z, or t you will need grouping symbols');
+    appnd('int_0^1 f(x)dx', 'Subscripts must come before superscripts');
+    appnd('int_0^1 f(x)dx', 'Subscripts must come before superscripts');
 
 
-    appnd('ubrace(1+2+3+4)_("4 terms")','Overbraces and underbraces'); 
-    appnd('obrace(1+2+3+4)_("4 terms")'); 
+    appnd('(dq)/(dp)', 'For variables other than x,y,z, or t you will need grouping symbols');
+
+
+    appnd('ubrace(1+2+3+4)_("4 terms")', 'Overbraces and underbraces');
+    appnd('obrace(1+2+3+4)_("4 terms")');
     appnd('hat(ab) bar(xy) ulA vec v dotx ddot y');
     appnd('bb{AB3}.bbb(AB).cc(AB).fr(AB).tt[AB].sf(AB)');
     appnd('x+b/(2a)=+-sqrt((b^2)/(4a^2)-c/a)');
     appnd('x_(1,2)=(-b+-sqrt(b^2-4ac))/(2a)');
-    
-        
+
+
     appnd('a');
     appnd('ab');
     appnd('bold(a)');
@@ -316,7 +316,7 @@ function testSuite()
     appnd('(f^{[n]})');
     appnd('"abc"');
     appnd('a b c, a,b,c');
-    
+
     appnd('"abc"');
     appnd('a b c, a,b,c');
     appnd('(a)');
@@ -329,7 +329,7 @@ function testSuite()
     appnd('a NN alpha ZZ');
     appnd('a + b - c * d xx e');
     appnd('-200-100 - 50  -a-b');
-    
+
     appnd('"abc 01239"');
     appnd('"abc 01239 $%*"');
     appnd('bold ("abc 01239 $%*")');
@@ -338,10 +338,10 @@ function testSuite()
     appnd('italic "$%* abc 01239 $%*"');
     appnd('bold italic ("abc 01239 $%*")');
     appnd('bold italic "$%* abc 01239 $%*"');
-    
+
     appnd('bold abc');
     appnd('bold(abc)');
-    
+
     appnd('$%*');
     appnd('abc 01239 $%*');
     appnd('bold "abc 01239 $%*"');
@@ -373,7 +373,7 @@ function testSuite()
     appnd('(a+b)/c');
     appnd('a/(b+c)');
     appnd('a/((b+c))');
-    
+
     appnd('a^b');
     appnd('a^b+c');
     appnd('a+b^b');
@@ -381,7 +381,7 @@ function testSuite()
     appnd('a^(b+c)');
     appnd('a^((b+c))');
     appnd('(a+b)/b');
-    
+
     appnd('overset x =');
     appnd('overset x (=)');
     appnd('overset (x) =');
@@ -390,7 +390,7 @@ function testSuite()
     appnd('frac{2}{3}');
     appnd('id(red)(x)');
     appnd('color(red)(x)');
-    
+
     appnd('{a,b,c,d}');
     appnd('(a,b,c,d)');
     appnd('[a,b,c,d]');
@@ -401,7 +401,7 @@ function testSuite()
     appnd('[[a,b][c,d]]');
     appnd('sum_(i=1)^n i^3=((n(n+1))/2)^2');
     appnd('[[a,b],[c,d]]');
-    
+
     appnd('[(a,b),(c,d)]');
     appnd('((a),(b))');
     appnd('([a],[b])');
@@ -429,7 +429,7 @@ function testSuite()
     appnd('gfgf');
     appnd('epsi epsilon varepsilon');
 
-    appnd('color (red) ([[a,b,|,c],[d,e,|,f]])','color not right for augment line');
+    appnd('color (red) ([[a,b,|,c],[d,e,|,f]])', 'color not right for augment line');
 
-/** */
-    }
+    /** */
+}
